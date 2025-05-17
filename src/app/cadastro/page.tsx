@@ -22,23 +22,27 @@ export default function Cadastro() {
   return (
     <div className="min-h-screen flex">
       {/* Lado Esquerdo - Preto */}
-      <div className="w-1/2 bg-black p-12 flex flex-col justify-between">
-        <div>
-          <Image 
-            src="/logo.svg" 
-            alt="Elifoot Logo" 
-            width={180} 
-            height={50}
-            className="mb-16"
-          />
-          <h1 className="text-white text-5xl font-bold mb-4">Bem-vindo<br />de volta!</h1>
-          <p className="text-white text-xl">Acesse sua conta agora mesmo.</p>
-        </div>
-        
-        <div className="flex flex-col gap-6">
+      <div className="w-1/2 bg-black p-12 flex flex-col justify-between pt-[15%]">
+        <div className="flex flex-col items-center text-center">
+          <div className="justify-center">
+            <Image 
+              src="/logo.svg" 
+              alt="Elifoot Logo" 
+              width={180} 
+              height={50}
+              className="mb-16"
+            />
+            <h1 className="text-white text-5xl font-bold mb-4 text-left">Bem-vindo<br />de volta!</h1>
+            <p className="text-white text-xl mb-8 text-left">Acesse sua conta agora mesmo.</p>
+          </div>
           <Link 
-            href="/login"
-            className="text-white border-2 border-white rounded-full px-12 py-3 text-center text-xl font-bold hover:bg-white hover:text-black transition-colors"
+            href="/"
+            className="text-white border-2 border-white rounded-full px-12 py-3 text-center text-xl font-bold hover:bg-white hover:text-black transition-colors mb-4"
+            style={{
+              width: '290px',
+              borderRadius: '10px',
+              marginTop: '30px'
+            }}
           >
             ENTRAR
           </Link>
