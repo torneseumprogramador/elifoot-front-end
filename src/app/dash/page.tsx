@@ -1,35 +1,35 @@
 "use client";
 
-import { Button } from "@/components/atoms/Button";
+import { LinkButton } from "@/components/atoms/LinkButton";
 import { DashTemplate } from "@/components/templates/DashTemplate";
 
 export default function DashCadastro() {
   return (
     <DashTemplate title="O que vamos cadastrar hoje?" subtitle="Escolha o que cadastrar">
       <div className="flex justify-center gap-4">
-        <Button
-            type="submit"
+        <LinkButton
+            href="/dash/estadio/cadastro"
             variant="outline"
             className="w-[400px] rounded-[10px]"
         >
             Cadastrar Estádio
-        </Button>
+        </LinkButton>
 
-        <Button
-            type="submit"
+        <LinkButton
+            href="/dash/clube/cadastro"
             variant="black-white"
             className="w-[400px] rounded-[10px]"
         >
             Cadastrar Clube
-        </Button>
+        </LinkButton>
 
-        <Button
-            type="submit"
+        <LinkButton
+            href="/dash/jogador/cadastro"
             variant="outline"
             className="w-[400px] rounded-[10px]"
         >
             Cadastrar Jogador
-        </Button>
+        </LinkButton>
       </div>
     </DashTemplate>
   );
