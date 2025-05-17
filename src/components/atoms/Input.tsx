@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 
 interface InputProps {
   type: string;
@@ -11,15 +11,15 @@ interface InputProps {
   border?: boolean;
 }
 
-export function Input({ 
-  type, 
-  placeholder, 
-  value, 
-  onChange, 
-  icon, 
+export function Input({
+  type,
+  placeholder,
+  value,
+  onChange,
+  icon,
   required = false,
-  bgColor = '#1A1A1A',
-  border = false
+  bgColor = "#1A1A1A",
+  border = false,
 }: InputProps) {
   return (
     <div className="relative">
@@ -35,8 +35,8 @@ export function Input({
         onChange={onChange}
         required={required}
         style={{ backgroundColor: bgColor }}
-        className={`w-full ${icon ? 'pl-10' : 'pl-4'} pr-4 py-3 rounded-[10px] text-white placeholder-gray-400 ${border ? 'border border-gray-500' : ''} focus:ring-2 focus:ring-[#E4A853] focus:outline-none transition-all`}
+        className={`w-full ${icon ? "pl-10" : "pl-4"} pr-4 py-3 rounded-[10px] text-white placeholder-gray-400 ${border ? "border border-gray-500" : ""} focus:ring-2 focus:ring-[#E4A853] focus:outline-none transition-all`}
       />
     </div>
   );
-} 
+}

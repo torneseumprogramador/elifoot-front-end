@@ -1,19 +1,19 @@
-import { useState } from 'react';
-import Link from 'next/link';
-import { FiUser, FiLock } from 'react-icons/fi';
-import { FormField } from '../molecules/FormField';
-import { Button } from '../atoms/Button';
+import { useState } from "react";
+import Link from "next/link";
+import { FiUser, FiLock } from "react-icons/fi";
+import { FormField } from "../molecules/FormField";
+import { Button } from "../atoms/Button";
 
 export function LoginForm() {
   const [formData, setFormData] = useState({
-    nome: '',
-    password: ''
+    nome: "",
+    password: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // TODO: Implementar a lógica de login
-    console.log('Login attempt:', formData);
+    console.log("Login attempt:", formData);
   };
 
   return (
@@ -32,7 +32,9 @@ export function LoginForm() {
           type="password"
           placeholder="Sua Senha"
           value={formData.password}
-          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, password: e.target.value })
+          }
           icon={<FiLock size={20} />}
           required
           bgColor="#1A1A1A"
@@ -40,7 +42,10 @@ export function LoginForm() {
       </div>
 
       <div className="flex justify-between items-center text-sm">
-        <Link href="/recuperar-senha" className="text-gray-400 hover:text-[#E4A853]">
+        <Link
+          href="/recuperar-senha"
+          className="text-gray-400 hover:text-[#E4A853]"
+        >
           Recuperar minha senha
         </Link>
         <Link href="/cadastro" className="text-[#E4A853] hover:text-[#c89447]">
@@ -48,12 +53,9 @@ export function LoginForm() {
         </Link>
       </div>
 
-      <Button
-        type="submit"
-        className="w-[250px] rounded-[10px] mx-auto block"
-      >
+      <Button type="submit" className="w-[250px] rounded-[10px] mx-auto block">
         Entrar
       </Button>
     </form>
   );
-} 
+}

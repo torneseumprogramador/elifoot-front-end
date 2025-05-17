@@ -1,7 +1,7 @@
-import { ReactNode } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Button } from '../atoms/Button';
+import { ReactNode } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "../atoms/Button";
 
 interface AuthTemplateProps {
   children: ReactNode;
@@ -18,7 +18,7 @@ export function AuthTemplate({
   subtitle,
   showLoginButton = false,
   showRegisterLink = false,
-  showForgotPasswordLink = false
+  showForgotPasswordLink = false,
 }: AuthTemplateProps) {
   return (
     <div className="min-h-screen flex">
@@ -34,13 +34,15 @@ export function AuthTemplate({
               className="mb-16"
             />
             <h1 className="text-white text-5xl font-bold mb-4 text-left">
-              Bem-vindo<br />de volta!
+              Bem-vindo
+              <br />
+              de volta!
             </h1>
             <p className="text-white text-xl mb-8 text-left">
               Acesse sua conta agora mesmo.
             </p>
           </div>
-          
+
           {showLoginButton && (
             <Link href="/" className="w-[290px] mb-4">
               <Button variant="outline" className="w-full">
@@ -81,4 +83,4 @@ export function AuthTemplate({
       </div>
     </div>
   );
-} 
+}

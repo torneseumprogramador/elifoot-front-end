@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { FiMail } from 'react-icons/fi';
-import { FormField } from '../molecules/FormField';
-import { Button } from '../atoms/Button';
+import { useState } from "react";
+import { FiMail } from "react-icons/fi";
+import { FormField } from "../molecules/FormField";
+import { Button } from "../atoms/Button";
 
 export function RecoverPasswordForm() {
   const [formData, setFormData] = useState({
-    email: ''
+    email: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -20,7 +20,7 @@ export function RecoverPasswordForm() {
         type="email"
         placeholder="Seu Email"
         value={formData.email}
-        onChange={(e) => setFormData({...formData, email: e.target.value})}
+        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
         icon={<FiMail size={20} />}
         required
         bgColor="#F5F5F5"
@@ -35,4 +35,4 @@ export function RecoverPasswordForm() {
       </Button>
     </form>
   );
-} 
+}

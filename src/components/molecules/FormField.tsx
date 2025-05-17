@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
-import { Input } from '../atoms/Input';
+import { ReactNode } from "react";
+import { Input } from "../atoms/Input";
 
 interface FormFieldProps {
   label?: string;
@@ -24,7 +24,7 @@ export function FormField({
   error,
   required,
   bgColor,
-  border
+  border,
 }: FormFieldProps) {
   return (
     <div className="space-y-2">
@@ -43,9 +43,7 @@ export function FormField({
         bgColor={bgColor}
         border={border}
       />
-      {error && (
-        <p className="text-sm text-red-500">{error}</p>
-      )}
+      {error && <p className="text-sm text-red-500">{error}</p>}
     </div>
   );
-} 
+}

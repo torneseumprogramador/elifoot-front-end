@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import { AuthTemplate } from '@/components/templates/AuthTemplate';
-import { RegisterForm } from '@/components/organisms/RegisterForm';
+import { AuthTemplate } from "@/components/templates/AuthTemplate";
+import { RegisterForm } from "@/components/organisms/RegisterForm";
 
 export default function Cadastro() {
   return (
