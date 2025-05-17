@@ -10,6 +10,8 @@ interface FormFieldProps {
   icon?: ReactNode;
   error?: string;
   required?: boolean;
+  bgColor?: string;
+  border?: boolean;
 }
 
 export function FormField({
@@ -20,7 +22,9 @@ export function FormField({
   onChange,
   icon,
   error,
-  required
+  required,
+  bgColor,
+  border
 }: FormFieldProps) {
   return (
     <div className="space-y-2">
@@ -36,6 +40,8 @@ export function FormField({
         onChange={onChange}
         icon={icon}
         required={required}
+        bgColor={bgColor}
+        border={border}
       />
       {error && (
         <p className="text-sm text-red-500">{error}</p>

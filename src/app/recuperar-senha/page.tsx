@@ -9,6 +9,7 @@ export default function EsqueciSenha() {
       title="Recuperar senha"
       subtitle="Preencha seu email para recuperar sua senha"
       showLoginButton
+      showRegisterLink={true}
     >
       <RecoverPasswordForm />
     </AuthTemplate>

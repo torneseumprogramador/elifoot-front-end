@@ -7,9 +7,20 @@ interface InputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   icon?: ReactNode;
   required?: boolean;
+  bgColor?: string;
+  border?: boolean;
 }
 
-export function Input({ type, placeholder, value, onChange, icon, required = false }: InputProps) {
+export function Input({ 
+  type, 
+  placeholder, 
+  value, 
+  onChange, 
+  icon, 
+  required = false,
+  bgColor = '#1A1A1A',
+  border = false
+}: InputProps) {
   return (
     <div className="relative">
       {icon && (
@@ -23,7 +34,8 @@ export function Input({ type, placeholder, value, onChange, icon, required = fal
         value={value}
         onChange={onChange}
         required={required}
-        className={`w-full ${icon ? 'pl-10' : 'pl-4'} pr-4 py-3 rounded-lg bg-[#1A1A1A] text-white border-none focus:ring-1 focus:ring-[#E4A853] focus:outline-none`}
+        style={{ backgroundColor: bgColor }}
+        className={`w-full ${icon ? 'pl-10' : 'pl-4'} pr-4 py-3 rounded-[10px] text-white placeholder-gray-400 ${border ? 'border border-gray-500' : ''} focus:ring-2 focus:ring-[#E4A853] focus:outline-none transition-all`}
       />
     </div>
   );

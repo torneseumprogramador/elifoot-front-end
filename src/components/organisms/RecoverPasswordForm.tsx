@@ -23,6 +23,8 @@ export function RecoverPasswordForm() {
         onChange={(e) => setFormData({...formData, email: e.target.value})}
         icon={<FiMail size={20} />}
         required
+        bgColor="#F5F5F5"
+        border={true}
       />
 
       <Button

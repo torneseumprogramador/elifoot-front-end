@@ -18,23 +18,26 @@ export function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <FormField
-        type="text"
-        placeholder="Seu Nome"
-        value={formData.nome}
-        onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
-        icon={<FiUser size={20} />}
-        required
-      />
+      <div className="space-y-4">
+        <FormField
+          type="text"
+          placeholder="Seu Nome"
+          value={formData.nome}
+          onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
+          icon={<FiUser size={20} />}
+          required
+        />
 
-      <FormField
-        type="password"
-        placeholder="Sua Senha"
-        value={formData.password}
-        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-        icon={<FiLock size={20} />}
-        required
-      />
+        <FormField
+          type="password"
+          placeholder="Sua Senha"
+          value={formData.password}
+          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+          icon={<FiLock size={20} />}
+          required
+          bgColor="#1A1A1A"
+        />
+      </div>
 
       <div className="flex justify-between items-center text-sm">
         <Link href="/recuperar-senha" className="text-gray-400 hover:text-[#E4A853]">
@@ -45,7 +48,10 @@ export function LoginForm() {
         </Link>
       </div>
 
-      <Button type="submit" className="w-full">
+      <Button
+        type="submit"
+        className="w-[250px] rounded-[10px] mx-auto block"
+      >
         Entrar
       </Button>
     </form>

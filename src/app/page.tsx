@@ -1,15 +1,15 @@
 'use client';
 
-import { AuthTemplate } from '@/components/templates/AuthTemplate';
+import { HomeTemplate } from '@/components/templates/HomeTemplate';
 import { LoginForm } from '@/components/organisms/LoginForm';
 
 export default function Home() {
   return (
-    <AuthTemplate
+    <HomeTemplate
       title="Bem-vindo de volta!"
       subtitle="Acesse a sua conta"
     >
       <LoginForm />
-    </AuthTemplate>
+    </HomeTemplate>
   );
 }

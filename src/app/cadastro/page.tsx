@@ -9,6 +9,7 @@ export default function Cadastro() {
       title="Crie sua conta"
       subtitle="Preencha seus dados"
       showLoginButton
+      showForgotPasswordLink={true}
     >
       <RegisterForm />
     </AuthTemplate>

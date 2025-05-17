@@ -26,6 +26,8 @@ export function RegisterForm() {
         onChange={(e) => setFormData({...formData, nome: e.target.value})}
         icon={<FiUser size={20} />}
         required
+        bgColor="#F5F5F5"
+        border={true}
       />
 
       <FormField
@@ -35,6 +37,8 @@ export function RegisterForm() {
         onChange={(e) => setFormData({...formData, email: e.target.value})}
         icon={<FiMail size={20} />}
         required
+        bgColor="#F5F5F5"
+        border={true}
       />
 
       <FormField
@@ -44,6 +48,8 @@ export function RegisterForm() {
         onChange={(e) => setFormData({...formData, senha: e.target.value})}
         icon={<FiLock size={20} />}
         required
+        bgColor="#F5F5F5"
+        border={true}
       />
 
       <FormField
@@ -53,6 +59,8 @@ export function RegisterForm() {
         onChange={(e) => setFormData({...formData, confirmarSenha: e.target.value})}
         icon={<FiLock size={20} />}
         required
+        bgColor="#F5F5F5"
+        border={true}
       />
 
       <Button

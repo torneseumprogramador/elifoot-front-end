@@ -51,7 +51,7 @@ export function AuthTemplate({
 
           {showForgotPasswordLink && (
             <Link
-              href="/esqueci-senha"
+              href="/recuperar-senha"
               className="text-white text-sm hover:underline"
             >
               Esqueci minha senha.
