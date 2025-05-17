@@ -29,6 +29,7 @@ export function RecoverPasswordForm() {
 
       <Button
         type="submit"
+        variant="black"
         className="mt-4 mx-auto block w-[250px] rounded-[10px]"
       >
         RECUPERAR

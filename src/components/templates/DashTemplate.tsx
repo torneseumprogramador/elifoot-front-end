@@ -1,16 +1,16 @@
 import { ReactNode } from "react";
 import Image from "next/image";
 
-interface HomeTemplateProps {
+interface DashTemplateProps {
   children: ReactNode;
   title: string;
   subtitle: string;
 }
 
-export function HomeTemplate({ children, title, subtitle }: HomeTemplateProps) {
+export function DashTemplate({ children, title, subtitle }: DashTemplateProps) {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-black text-white p-4">
-      <div className="w-full max-w-md space-y-8">
+      <div className="w-full max-w-2xl space-y-8">
         <div className="flex flex-col items-center">
           <Image
             src="/logo.svg"
