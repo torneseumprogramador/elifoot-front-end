@@ -3,7 +3,7 @@
 import { AuthTemplate } from "@/components/templates/AuthTemplate";
 import { RecoverPasswordForm } from "@/components/organisms/RecoverPasswordForm";
 
-export default function EsqueciSenha() {
+export default function RecuperarSenha() {
   return (
     <AuthTemplate
       title="Recuperar senha"
