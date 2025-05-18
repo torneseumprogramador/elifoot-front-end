@@ -6,6 +6,7 @@ interface ButtonProps {
   variant?: "primary" | "outline" | "black" | "black-white" | "secondary";
   onClick?: () => void;
   className?: string;
+  disabled?: boolean;
 }
 
 export function Button({
@@ -14,6 +15,7 @@ export function Button({
   variant = "primary",
   onClick,
   className = "",
+  disabled = false,
 }: ButtonProps) {
   const baseStyles = "font-semibold py-3 px-4 rounded-lg transition-colors";
   const variantStyles = {
@@ -28,7 +30,8 @@ export function Button({
     <button
       type={type}
       onClick={onClick}
-      className={`${baseStyles} ${variantStyles[variant]} ${className}`}
+      disabled={disabled}
+      className={`${baseStyles} ${variantStyles[variant]} ${className} disabled:opacity-50 disabled:cursor-not-allowed`}
     >
       {children}
     </button>

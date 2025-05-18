@@ -1,29 +1,55 @@
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { FiUser, FiLock } from "react-icons/fi";
 import { FormField } from "../molecules/FormField";
 import { Button } from "../atoms/Button";
+import { authService } from "@/services/authService";
 
 export function LoginForm() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
-    nome: "",
+    email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implementar a lógica de login
-    console.log("Login attempt:", formData);
+    setLoading(true);
+    setError("");
+
+    try {
+      await authService.login({
+        email: formData.email,
+        password: formData.password,
+      });
+      
+      // Redireciona para o dashboard após o login
+      router.push("/dash/jogadores");
+    } catch (err) {
+      setError("Email ou senha inválidos");
+      console.error("Login error:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {error && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+          {error}
+        </div>
+      )}
+
       <div className="space-y-4">
         <FormField
-          type="text"
-          placeholder="Seu Nome"
-          value={formData.nome}
-          onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
+          type="email"
+          placeholder="Seu Email"
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           icon={<FiUser size={20} />}
           required
         />
@@ -53,8 +79,12 @@ export function LoginForm() {
         </Link>
       </div>
 
-      <Button type="submit" className="w-[250px] rounded-[10px] mx-auto block">
-        Entrar
+      <Button 
+        type="submit" 
+        className="w-[250px] rounded-[10px] mx-auto block"
+        disabled={loading}
+      >
+        {loading ? "Entrando..." : "Entrar"}
       </Button>
     </form>
   );
