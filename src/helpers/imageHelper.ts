@@ -29,6 +29,7 @@ export const getEntityImage = (entityName: string, entityType: EntityType): Prom
       };
       
       img.onerror = () => {
+        debugger
         resolve(`/images/default-${entityType}.png`);
       };
       
