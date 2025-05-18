@@ -1,36 +1,139 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Elifoot Frontend
 
-## Getting Started
+Aplicação frontend do sistema de gerenciamento de futebol Elifoot, construída com Next.js.
 
-First, run the development server:
+## Funcionalidades
 
+- Gerenciamento de estádios
+- Gerenciamento de clubes
+- Gerenciamento de jogadores
+- Tratamento padronizado de erros
+- Funcionalidade de upload de imagens
+- Interface responsiva do painel administrativo
+
+## Tecnologias Utilizadas
+
+- Next.js 15.3.2
+- React 19
+- TypeScript
+- Tailwind CSS
+- Docker
+
+## Pré-requisitos
+
+- Node.js 20.x
+- npm ou yarn
+- Docker (para implantação em container)
+
+## Como Começar
+
+### Desenvolvimento Local
+
+1. Clone o repositório:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone [repository-url]
+cd elifoot-front-end
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Instale as dependências:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Crie um arquivo `.env` na raiz do projeto:
+```env
+API_URL=http://localhost:8080
+# Adicione outras variáveis de ambiente conforme necessário
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Execute o servidor de desenvolvimento:
+```bash
+npm run dev
+```
 
-## Learn More
+A aplicação estará disponível em `http://localhost:3000`.
 
-To learn more about Next.js, take a look at the following resources:
+### Implantação com Docker
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Construa e execute com Docker Compose:
+```bash
+docker-compose up -d
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. Pare os containers:
+```bash
+docker-compose down
+```
 
-## Deploy on Vercel
+## Estrutura do Projeto
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+src/
+├── app/                    # Diretório principal do Next.js
+│   ├── api/               # Rotas da API
+│   │   ├── clubs/        # Endpoints de clubes
+│   │   ├── players/      # Endpoints de jogadores
+│   │   ├── stadiums/     # Endpoints de estádios
+│   │   ├── upload/       # Endpoints de upload
+│   │   └── health/       # Endpoint de verificação de saúde
+│   └── dash/             # Páginas do painel
+├── components/            # Componentes React
+│   ├── atoms/            # Componentes básicos
+│   ├── molecules/        # Componentes compostos
+│   ├── organisms/        # Componentes complexos
+│   ├── templates/        # Templates de páginas
+│   └── guards/           # Guardas de autenticação
+└── services/             # Serviços de API
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Tratamento de Erros
+
+A aplicação implementa um tratamento padronizado de erros em todos os endpoints da API:
+
+### Formato de Resposta de Sucesso
+```typescript
+{
+  ...data,
+  path: string,
+  status: number,
+  timestamp: string
+}
+```
+
+### Formato de Resposta de Erro
+```typescript
+{
+  error: string,
+  path: string,
+  status: number,
+  timestamp: string
+}
+```
+
+## Configuração Docker
+
+A aplicação inclui:
+- Dockerfile multi-estágio para builds otimizadas
+- Configuração do Docker Compose
+- Endpoint de verificação de saúde
+- Reinicialização automática de containers
+- Gerenciamento de variáveis de ambiente
+
+## Scripts Disponíveis
+
+- `npm run dev` - Inicia o servidor de desenvolvimento
+- `npm run build` - Compila para produção
+- `npm start` - Inicia o servidor de produção
+- `npm run lint` - Executa a verificação de código
+- `npm run format` - Formata o código com Prettier
+
+## Como Contribuir
+
+1. Crie uma branch para sua feature
+2. Faça commit das suas alterações
+3. Faça push para a branch
+4. Crie um Pull Request
+
+## Licença
+
+[Sua Licença Aqui]
