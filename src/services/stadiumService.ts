@@ -1,15 +1,16 @@
 import { api } from './api';
 import { Stadium, CreateStadiumDTO } from '@/types/stadium';
+import { PaginatedResponse } from '@/types/common';
 
 export const stadiumService = {
   // Get all stadiums
   async getAll(): Promise<Stadium[]> {
-    const response = await api.get('/stadiums');
-    return response.data;
+    const response = await api.get<PaginatedResponse<Stadium>>('/stadiums');
+    return response.data.content;
   },
 
   // Get stadium by ID
-  async getById(id: string): Promise<Stadium> {
+  async getById(id: number): Promise<Stadium> {
     const response = await api.get(`/stadiums/${id}`);
     return response.data;
   },
@@ -21,13 +22,13 @@ export const stadiumService = {
   },
 
   // Update stadium
-  async update(id: string, stadium: Partial<CreateStadiumDTO>): Promise<Stadium> {
+  async update(id: number, stadium: Partial<CreateStadiumDTO>): Promise<Stadium> {
     const response = await api.put(`/stadiums/${id}`, stadium);
     return response.data;
   },
 
   // Delete stadium
-  async delete(id: string): Promise<void> {
+  async delete(id: number): Promise<void> {
     await api.delete(`/stadiums/${id}`);
   }
 }; 

@@ -1,14 +1,10 @@
 export interface Club {
-  id: string;
+  id: number;
   name: string;
-  location: string;
-  foundingDate: string;
-  imageUrl: string;
+  founded: string;
 }
 
 export interface CreateClubDTO {
   name: string;
-  location: string;
-  foundingDate: string;
-  imageUrl: string;
+  founded: string;
 } 

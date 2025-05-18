@@ -6,7 +6,7 @@ const API_URL = process.env.API_URL;
 export async function GET(request: NextRequest) {
   try {
     // TODO pegar do cookie
-    const token_cookie = "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInNjb3BlIjpbImFkbWluOmFsbCJdLCJpc3MiOiJlbGlmb290LWFwaSIsImV4cCI6MTc0NzU3MjU3NSwiaWF0IjoxNzQ3NTcxOTc1LCJlbWFpbCI6ImFkbWluQGphdmExMHgifQ.CQ9C--l-4X0N1BgL3Y7BYrzjR2ei5ENgQSZHEsKJBMmBxPe6cAwx4Z83ZnPqTqoWEiCv2GM2PCn6eD_wZzZBJQmPz8zeTqZuudlZjL_7ZCDPZhVGqs6RzmTvlj5c3XhyyrDCqu02y91OlA_NSsOCQIIHhsHhBwC5EspFKurYGxilOj3FJKuvncMgmiQwpwcDzw7ISF4-6KePu1x_-W1LqLueQGR3P9VxtRJZOtk39TdW93AKfX7L9FvF6Z2U3ecoQsJwsnuf8A7-hsvSSPONIb9r23xz6PF_rI0jp7M3_IJuXLnXHdn0Mia9WWqLHQosRvS_SIZ7MEamIC9IUtVlLA";
+    const token_cookie = "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInNjb3BlIjpbImFkbWluOmFsbCJdLCJpc3MiOiJlbGlmb290LWFwaSIsImV4cCI6MTc0NzU3NDM0NSwiaWF0IjoxNzQ3NTczNzQ1LCJlbWFpbCI6ImFkbWluQGphdmExMHgifQ.oDCP6pULSzF0HkdO5iS87vXMLpNViC7G1mrXpEPkjdwrbPlUtElQvAjcbySjjya8wmA0PqsnayVctxW5WefD-uBVlVx6TzbsKU67K36K0uRGzJj6I3MEbxJeeySgEv6fONuRiUcCCvQWqkGjG93mC3iqKw7_Xi-6fIONzkRk47Adtwnbs4ouQJmBpCTzzb_cMGgHiL0suZCjbGp3P1nlzRuEWItZrpqo1Dj9LRZA7yQQBRFJrB4UAsJZuCsOGA2syMYqo4KXHtoIrMfihfQsdLYzNtrx9L82wc61CL1W0BLX2dwC4AK6J7ZPy6Fx4tNDUa9WMpuf9rYko8iE4tMtBg";
     const response = await fetch(`${API_URL}/players`, {
       headers: {
         'Content-Type': 'application/json',

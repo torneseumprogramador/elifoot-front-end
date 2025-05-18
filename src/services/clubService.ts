@@ -1,15 +1,16 @@
 import { api } from './api';
 import { Club, CreateClubDTO } from '@/types/club';
+import { PaginatedResponse } from '@/types/common';
 
 export const clubService = {
   // Get all clubs
   async getAll(): Promise<Club[]> {
-    const response = await api.get('/clubs');
-    return response.data;
+    const response = await api.get<PaginatedResponse<Club>>('/clubs');
+    return response.data.content;
   },
 
   // Get club by ID
-  async getById(id: string): Promise<Club> {
+  async getById(id: number): Promise<Club> {
     const response = await api.get(`/clubs/${id}`);
     return response.data;
   },
@@ -21,13 +22,13 @@ export const clubService = {
   },
 
   // Update club
-  async update(id: string, club: Partial<CreateClubDTO>): Promise<Club> {
+  async update(id: number, club: Partial<CreateClubDTO>): Promise<Club> {
     const response = await api.put(`/clubs/${id}`, club);
     return response.data;
   },
 
   // Delete club
-  async delete(id: string): Promise<void> {
+  async delete(id: number): Promise<void> {
     await api.delete(`/clubs/${id}`);
   }
 }; 

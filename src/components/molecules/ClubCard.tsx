@@ -2,17 +2,15 @@ import Image from 'next/image';
 
 interface ClubCardProps {
   name: string;
-  location: string;
-  foundingDate: string;
-  imageUrl: string;
+  founded: string;
 }
 
-export function ClubCard({ name, location, foundingDate, imageUrl }: ClubCardProps) {
+export function ClubCard({ name, founded }: ClubCardProps) {
   return (
     <div className="bg-[#1A1A1A] rounded-lg overflow-hidden w-[300px]">
       <div className="relative h-[300px] bg-[#262626] flex items-center justify-center p-8">
         <Image
-          src={imageUrl}
+          src="/clube.svg"
           alt={name}
           width={200}
           height={200}
@@ -23,8 +21,7 @@ export function ClubCard({ name, location, foundingDate, imageUrl }: ClubCardPro
       <div className="p-4 border-t border-[#E4A853]">
         <h3 className="text-[#E4A853] text-xl font-bold mb-2">{name}</h3>
         <div className="text-gray-400 text-sm">
-          <p>Localização: {location}</p>
-          <p>Fundação: {foundingDate}</p>
+          <p>Fundação: {founded}</p>
         </div>
       </div>
     </div>

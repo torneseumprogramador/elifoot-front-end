@@ -3,63 +3,41 @@
 import { DashboardHomeTemplate } from "@/components/templates/DashboardHomeTemplate";
 import { StadiumCard } from "@/components/molecules/StadiumCard";
 import { Slideshow } from "@/components/molecules/Slideshow";
-
-// This would typically come from an API
-const MOCK_STADIUMS = [
-  {
-    name: "São Januário",
-    city: "Rio de Janeiro",
-    capacity: "21.880",
-    imageUrl: "/estadio.svg"
-  },
-  {
-    name: "Beira-Rio",
-    city: "Porto Alegre",
-    capacity: "50.842",
-    imageUrl: "/estadio.svg"
-  },
-  {
-    name: "Maracanã",
-    city: "Rio de Janeiro",
-    capacity: "78.838",
-    imageUrl: "/estadio.svg"
-  },
-  {
-    name: "Allianz Parque",
-    city: "São Paulo",
-    capacity: "43.713",
-    imageUrl: "/estadio.svg"
-  },
-  {
-    name: "Allianz Parque",
-    city: "São Paulo",
-    capacity: "43.713",
-    imageUrl: "/estadio.svg"
-  },
-  {
-    name: "Allianz Parque",
-    city: "São Paulo",
-    capacity: "43.713",
-    imageUrl: "/estadio.svg"
-  },
-  // Add more stadiums as needed
-];
+import { stadiumService } from "@/services/stadiumService";
+import { Stadium } from "@/types/stadium";
+import { useApi } from "@/hooks/useApi";
 
 export default function EstadiosPage() {
+  const { data: stadiums, loading } = useApi<Stadium>({
+    fetchFn: stadiumService.getAll,
+    cacheKey: 'stadiums-list'
+  });
+
+  if (loading) {
+    return (
+      <DashboardHomeTemplate
+        title="Carregando estádios..."
+        subtitle="Por favor, aguarde"
+        activeTab="estadios"
+      >
+        <div>Loading...</div>
+      </DashboardHomeTemplate>
+    );
+  }
+
   return (
     <DashboardHomeTemplate
-      title="Seja bem-vindo a home"
-      subtitle="Aqui você pode ver todos cadastros efetuados"
+      title="Estádios"
+      subtitle="Lista de todos os estádios cadastrados"
       activeTab="estadios"
     >
       <Slideshow>
-        {MOCK_STADIUMS.map((stadium, index) => (
+        {stadiums.map((stadium) => (
           <StadiumCard
-            key={index}
+            key={stadium.id}
             name={stadium.name}
             city={stadium.city}
             capacity={stadium.capacity}
-            imageUrl={stadium.imageUrl}
           />
         ))}
       </Slideshow>

@@ -3,16 +3,15 @@ import Image from 'next/image';
 interface StadiumCardProps {
   name: string;
   city: string;
-  capacity: string;
-  imageUrl: string;
+  capacity: number;
 }
 
-export function StadiumCard({ name, city, capacity, imageUrl }: StadiumCardProps) {
+export function StadiumCard({ name, city, capacity }: StadiumCardProps) {
   return (
     <div className="bg-[#1A1A1A] rounded-lg overflow-hidden w-[300px]">
       <div className="relative h-[300px]">
         <Image
-          src={imageUrl}
+          src="/estadio.svg"
           alt={name}
           fill
           className="object-cover"
@@ -23,7 +22,7 @@ export function StadiumCard({ name, city, capacity, imageUrl }: StadiumCardProps
         <h3 className="text-[#E4A853] text-xl font-bold mb-2">{name}</h3>
         <div className="text-gray-400 text-sm">
           <p>Cidade: {city}</p>
-          <p>Capacidade: {capacity}</p>
+          <p>Capacidade: {capacity.toLocaleString()} pessoas</p>
         </div>
       </div>
     </div>

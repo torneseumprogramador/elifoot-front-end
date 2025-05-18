@@ -1,14 +1,12 @@
 export interface Stadium {
-  id: string;
+  id: number;
   name: string;
   city: string;
-  capacity: string;
-  imageUrl: string;
+  capacity: number;
 }
 
 export interface CreateStadiumDTO {
   name: string;
   city: string;
-  capacity: string;
-  imageUrl: string;
+  capacity: number;
 } 
