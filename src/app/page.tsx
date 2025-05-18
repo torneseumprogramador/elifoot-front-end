@@ -3,17 +3,9 @@
 import { HomeTemplate } from "@/components/templates/HomeTemplate";
 import { LoginForm } from "@/components/organisms/LoginForm";
 
-interface HomeProps {
-  title?: string;
-  subtitle?: string;
-}
-
-export default function Home({
-  title = "Bem-vindo de volta!",
-  subtitle = "Acesse a sua conta",
-}: HomeProps) {
+export default function HomePage() {
   return (
-    <HomeTemplate title={title} subtitle={subtitle}>
+    <HomeTemplate title="Bem-vindo de volta!" subtitle="Acesse a sua conta">
       <LoginForm />
     </HomeTemplate>
   );

@@ -5,12 +5,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - API_URL=${API_URL:-http://localhost:8080}
     container_name: elifoot-frontend
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=production
-      - API_URL=${API_URL:-http://localhost:8080}  # Default API URL if not set
+      - API_URL=${API_URL:-http://localhost:8080}
     env_file:
       - .env
     restart: unless-stopped
