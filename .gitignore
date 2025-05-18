@@ -117,4 +117,11 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Keep empty directories with .gitkeep
+!public/uploads/.gitkeep
+!public/uploads/club/.gitkeep
+!public/uploads/player/.gitkeep
+!public/uploads/stadium/.gitkeep
+!uploads/.gitkeep
+
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,linux
