@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import { getClubImage } from '@/helpers/imageHelper';
+import { useState, useEffect } from 'react';
 
 interface ClubCardProps {
   name: string;
@@ -6,14 +8,19 @@ interface ClubCardProps {
 }
 
 export function ClubCard({ name, founded }: ClubCardProps) {
+  const [imageSrc, setImageSrc] = useState<string>('/images/default-club.png');
+
+  useEffect(() => {
+    getClubImage(name).then(setImageSrc);
+  }, [name]);
+
   return (
     <div className="bg-[#1A1A1A] rounded-lg overflow-hidden w-[300px]">
-      <div className="relative h-[300px] bg-[#262626] flex items-center justify-center p-8">
+      <div className="relative h-[300px] bg-[#262626] flex items-center justify-center">
         <Image
-          src="/clube.svg"
+          src={imageSrc}
           alt={name}
-          width={200}
-          height={200}
+          fill
           className="object-contain"
         />
       </div>

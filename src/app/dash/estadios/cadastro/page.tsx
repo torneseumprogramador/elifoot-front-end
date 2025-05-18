@@ -4,22 +4,60 @@ import { DashboardTemplate } from "@/components/templates/DashboardTemplate";
 import { FormField } from "@/components/molecules/FormField";
 import { Button } from "@/components/atoms/Button";
 import { SuccessModal } from "@/components/molecules/SuccessModal";
-import { useState } from "react";
-import { FiMapPin, FiUsers } from "react-icons/fi";
+import { useState, useRef } from "react";
+import { FiMapPin, FiUsers, FiImage } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import { stadiumService } from "@/services/stadiumService";
 import { clearCache } from "@/hooks/useApi";
+import { slugify } from "@/helpers/imageHelper";
 
 export default function CadastroEstadio() {
   const router = useRouter();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [formData, setFormData] = useState({
     nome: "",
     cidade: "",
     capacidade: "",
   });
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      if (file.type.startsWith('image/')) {
+        setSelectedImage(file);
+      } else {
+        setError("Por favor, selecione apenas arquivos de imagem.");
+      }
+    }
+  };
+
+  const saveImage = async (stadiumName: string) => {
+    if (!selectedImage) return;
+
+    const formData = new FormData();
+    formData.append('image', selectedImage);
+    formData.append('entityName', stadiumName);
+    formData.append('entityType', 'stadium');
+
+    try {
+      // Save the image to the public/uploads directory
+      const response = await fetch('/api/upload/stadium', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to upload image');
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      // We don't want to block the stadium creation if image upload fails
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,6 +70,11 @@ export default function CadastroEstadio() {
         city: formData.cidade,
         capacity: Number(formData.capacidade)
       });
+
+      // After successful stadium creation, save the image
+      if (selectedImage) {
+        await saveImage(formData.nome);
+      }
 
       // Limpa o cache dos estádios após criar um novo
       clearCache('stadiums-list');
@@ -55,6 +98,10 @@ export default function CadastroEstadio() {
       cidade: "",
       capacidade: "",
     });
+    setSelectedImage(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
 
   const handleGoBack = () => {
@@ -105,6 +152,24 @@ export default function CadastroEstadio() {
             required
             bgColor="#2C2C2C"
           />
+
+          <div className="relative">
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleImageChange}
+              accept="image/*"
+              className="hidden"
+              id="stadium-image"
+            />
+            <label
+              htmlFor="stadium-image"
+              className="flex items-center gap-2 px-4 py-3 bg-[#2C2C2C] rounded-lg text-white border border-gray-700 cursor-pointer hover:border-[#E4A853] transition-colors"
+            >
+              <FiImage size={20} />
+              {selectedImage ? selectedImage.name : "Selecionar imagem do estádio"}
+            </label>
+          </div>
 
           <Button
             type="submit"

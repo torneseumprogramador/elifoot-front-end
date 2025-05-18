@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import { getPlayerImage } from '@/helpers/imageHelper';
+import { useState, useEffect } from 'react';
 
 interface PlayerCardProps {
   name: string;
@@ -7,11 +9,17 @@ interface PlayerCardProps {
 }
 
 export function PlayerCard({ name, position, shirtNumber }: PlayerCardProps) {
+  const [imageSrc, setImageSrc] = useState<string>('/images/default-player.png');
+
+  useEffect(() => {
+    getPlayerImage(name).then(setImageSrc);
+  }, [name]);
+
   return (
     <div className="bg-[#1A1A1A] rounded-lg overflow-hidden w-[300px]">
       <div className="relative h-[300px]">
         <Image
-          src="/jogador.svg"
+          src={imageSrc}
           alt={name}
           fill
           className="object-cover"
