@@ -1,15 +1,15 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { Button } from '../atoms/Button';
-import { authService } from '@/services/authService';
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Button } from "../atoms/Button";
+import { authService } from "@/services/authService";
 
 export function Header() {
   const router = useRouter();
 
   const handleLogout = () => {
     authService.logout();
-    router.push('/');
+    router.push("/");
   };
 
   return (
@@ -25,20 +25,20 @@ export function Header() {
       </Link>
 
       <nav className="flex items-center gap-8">
-        <Link 
-          href="/dash/estadios/cadastro" 
+        <Link
+          href="/dash/estadios/cadastro"
           className="text-gray-400 hover:text-white transition-colors"
         >
           Cadastrar Estádio
         </Link>
-        <Link 
-          href="/dash/clubes/cadastro" 
+        <Link
+          href="/dash/clubes/cadastro"
           className="text-gray-400 hover:text-white transition-colors"
         >
           Cadastrar Clube
         </Link>
-        <Link 
-          href="/dash/jogadores/cadastro" 
+        <Link
+          href="/dash/jogadores/cadastro"
           className="text-gray-400 hover:text-white transition-colors"
         >
           Cadastrar Jogador
@@ -54,4 +54,4 @@ export function Header() {
       </Button>
     </header>
   );
-} 
+}

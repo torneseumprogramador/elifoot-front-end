@@ -11,4 +11,4 @@ export default function EstadioLayout({
   children: React.ReactNode;
 }) {
   return children;
-} 
+}

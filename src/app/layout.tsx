@@ -14,7 +14,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Elifoot | Gerenciador de Times de Futebol",
-  description: "Sistema de gerenciamento de times de futebol, jogadores e estádios.",
+  description:
+    "Sistema de gerenciamento de times de futebol, jogadores e estádios.",
 };
 
 export default function RootLayout({

@@ -3,9 +3,9 @@
 import { DashboardTemplate } from "@/components/templates/DashboardTemplate";
 
 export default function EstadioDetalhes({
-  params
+  params,
 }: {
-  params: { id: string }
+  params: { id: string };
 }) {
   return (
     <DashboardTemplate
@@ -15,7 +15,9 @@ export default function EstadioDetalhes({
       type="estadio"
     >
       <div className="flex items-center justify-center h-full">
-        <h1 className="text-2xl font-bold text-gray-700">ID do Estádio: {params.id}</h1>
+        <h1 className="text-2xl font-bold text-gray-700">
+          ID do Estádio: {params.id}
+        </h1>
       </div>
     </DashboardTemplate>
   );

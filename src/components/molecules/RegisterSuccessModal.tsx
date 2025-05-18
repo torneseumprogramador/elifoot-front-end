@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import { Button } from '../atoms/Button';
+import Image from "next/image";
+import { Button } from "../atoms/Button";
 
 interface RegisterSuccessModalProps {
   isOpen: boolean;
@@ -24,14 +24,24 @@ export function RegisterSuccessModal({
             priority
             className="mb-8"
           />
-          
+
           <div className="mb-8">
             <div className="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mb-4 mx-auto">
-              <svg viewBox="0 0 24 24" className="w-8 h-8 text-white" fill="none" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <svg
+                viewBox="0 0 24 24"
+                className="w-8 h-8 text-white"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
               </svg>
             </div>
-            
+
             <h2 className="text-[#E4A853] text-2xl font-bold mb-2">
               Cadastro realizado com sucesso!
             </h2>
@@ -40,15 +50,11 @@ export function RegisterSuccessModal({
             </p>
           </div>
 
-          <Button
-            onClick={onClose}
-            variant="primary"
-            className="w-full"
-          >
+          <Button onClick={onClose} variant="primary" className="w-full">
             Continuar
           </Button>
         </div>
       </div>
     </div>
   );
-} 
+}

@@ -27,7 +27,7 @@ export default function CadastroEstadio() {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      if (file.type.startsWith('image/')) {
+      if (file.type.startsWith("image/")) {
         setSelectedImage(file);
       } else {
         setError("Por favor, selecione apenas arquivos de imagem.");
@@ -39,22 +39,22 @@ export default function CadastroEstadio() {
     if (!selectedImage) return;
 
     const formData = new FormData();
-    formData.append('image', selectedImage);
-    formData.append('entityName', stadiumName);
-    formData.append('entityType', 'stadium');
+    formData.append("image", selectedImage);
+    formData.append("entityName", stadiumName);
+    formData.append("entityType", "stadium");
 
     try {
       // Save the image to the public/uploads directory
-      const response = await fetch('/api/upload', {
-        method: 'POST',
+      const response = await fetch("/api/upload", {
+        method: "POST",
         body: formData,
       });
 
       if (!response.ok) {
-        throw new Error('Failed to upload image');
+        throw new Error("Failed to upload image");
       }
     } catch (error) {
-      console.error('Error uploading image:', error);
+      console.error("Error uploading image:", error);
       // We don't want to block the stadium creation if image upload fails
     }
   };
@@ -68,7 +68,7 @@ export default function CadastroEstadio() {
       await stadiumService.create({
         name: formData.nome,
         city: formData.cidade,
-        capacity: Number(formData.capacidade)
+        capacity: Number(formData.capacidade),
       });
 
       // After successful stadium creation, save the image
@@ -77,7 +77,7 @@ export default function CadastroEstadio() {
       }
 
       // Limpa o cache dos estádios após criar um novo
-      clearCache('stadiums-list');
+      clearCache("stadiums-list");
       setIsModalOpen(true);
     } catch (err: any) {
       if (err.response?.status === 409) {
@@ -100,7 +100,7 @@ export default function CadastroEstadio() {
     });
     setSelectedImage(null);
     if (fileInputRef.current) {
-      fileInputRef.current.value = '';
+      fileInputRef.current.value = "";
     }
   };
 
@@ -137,7 +137,9 @@ export default function CadastroEstadio() {
             type="text"
             placeholder="Em qual cidade fica o estádio?"
             value={formData.cidade}
-            onChange={(e) => setFormData({ ...formData, cidade: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, cidade: e.target.value })
+            }
             icon={<FiMapPin size={20} />}
             required
             bgColor="#2C2C2C"
@@ -147,7 +149,9 @@ export default function CadastroEstadio() {
             type="number"
             placeholder="Capacidade"
             value={formData.capacidade}
-            onChange={(e) => setFormData({ ...formData, capacidade: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, capacidade: e.target.value })
+            }
             icon={<FiUsers size={20} />}
             required
             bgColor="#2C2C2C"
@@ -167,7 +171,9 @@ export default function CadastroEstadio() {
               className="flex items-center gap-2 px-4 py-3 bg-[#2C2C2C] rounded-lg text-white border border-gray-700 cursor-pointer hover:border-[#E4A853] transition-colors"
             >
               <FiImage size={20} />
-              {selectedImage ? selectedImage.name : "Selecionar imagem do estádio"}
+              {selectedImage
+                ? selectedImage.name
+                : "Selecionar imagem do estádio"}
             </label>
           </div>
 
@@ -190,4 +196,4 @@ export default function CadastroEstadio() {
       />
     </>
   );
-} 
+}

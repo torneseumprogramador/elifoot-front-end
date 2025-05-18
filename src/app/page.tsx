@@ -8,7 +8,10 @@ interface HomeProps {
   subtitle?: string;
 }
 
-export default function Home({ title = "Bem-vindo de volta!", subtitle = "Acesse a sua conta" }: HomeProps) {
+export default function Home({
+  title = "Bem-vindo de volta!",
+  subtitle = "Acesse a sua conta",
+}: HomeProps) {
   return (
     <HomeTemplate title={title} subtitle={subtitle}>
       <LoginForm />

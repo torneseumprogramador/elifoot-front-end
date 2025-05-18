@@ -25,7 +25,7 @@ export function LoginForm() {
         email: formData.email,
         password: formData.password,
       });
-      
+
       router.push("/dash");
     } catch (err) {
       setError("Email ou senha inválidos");
@@ -78,8 +78,8 @@ export function LoginForm() {
         </Link>
       </div>
 
-      <Button 
-        type="submit" 
+      <Button
+        type="submit"
         className="w-[250px] rounded-[10px] mx-auto block"
         disabled={loading}
       >

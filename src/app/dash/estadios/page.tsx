@@ -10,7 +10,7 @@ import { useApi } from "@/hooks/useApi";
 export default function EstadiosPage() {
   const { data: stadiums, loading } = useApi<Stadium>({
     fetchFn: stadiumService.getAll,
-    cacheKey: 'stadiums-list'
+    cacheKey: "stadiums-list",
   });
 
   if (loading) {
@@ -21,7 +21,9 @@ export default function EstadiosPage() {
         activeTab="estadios"
       >
         <div className="flex items-center justify-center">
-          <div className="text-xl font-semibold text-gray-600">Carregando...</div>
+          <div className="text-xl font-semibold text-gray-600">
+            Carregando...
+          </div>
         </div>
       </DashboardHomeTemplate>
     );
@@ -45,4 +47,4 @@ export default function EstadiosPage() {
       </Slideshow>
     </DashboardHomeTemplate>
   );
-} 
+}

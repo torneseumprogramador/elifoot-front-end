@@ -10,7 +10,7 @@ import { useApi } from "@/hooks/useApi";
 export default function JogadoresPage() {
   const { data: players, loading } = useApi<Player>({
     fetchFn: playerService.getAll,
-    cacheKey: 'players-list'
+    cacheKey: "players-list",
   });
 
   if (loading) {
@@ -21,7 +21,9 @@ export default function JogadoresPage() {
         activeTab="jogadores"
       >
         <div className="flex items-center justify-center">
-          <div className="text-xl font-semibold text-gray-600">Carregando...</div>
+          <div className="text-xl font-semibold text-gray-600">
+            Carregando...
+          </div>
         </div>
       </DashboardHomeTemplate>
     );
@@ -45,4 +47,4 @@ export default function JogadoresPage() {
       </Slideshow>
     </DashboardHomeTemplate>
   );
-} 
+}

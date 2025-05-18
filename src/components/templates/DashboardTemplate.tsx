@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { ReactNode } from "react";
 import Image from "next/image";
@@ -19,12 +19,12 @@ export function DashboardTemplate({
   title,
   backPath,
   backPathLabel,
-  type
+  type,
 }: DashboardTemplateProps) {
   const images = {
     estadio: "/estadio.svg",
     clube: "/clube.svg",
-    jogador: "/jogador.svg"
+    jogador: "/jogador.svg",
   };
 
   return (
@@ -32,8 +32,8 @@ export function DashboardTemplate({
       <div className="min-h-screen flex bg-black">
         {/* Left Side - Form */}
         <div className="w-1/2 p-12">
-          <Link 
-            href={backPath} 
+          <Link
+            href={backPath}
             className="inline-flex items-center text-gray-400 hover:text-white mb-12"
           >
             <FiArrowLeft className="mr-2" />
@@ -51,9 +51,7 @@ export function DashboardTemplate({
           </div>
 
           <div className="max-w-xl">
-            <h1 className="text-4xl font-bold text-white mb-8">
-              {title}
-            </h1>
+            <h1 className="text-4xl font-bold text-white mb-8">{title}</h1>
 
             {children}
           </div>
@@ -73,4 +71,4 @@ export function DashboardTemplate({
       </div>
     </AuthGuard>
   );
-} 
+}

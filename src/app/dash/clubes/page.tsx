@@ -10,7 +10,7 @@ import { useApi } from "@/hooks/useApi";
 export default function ClubesPage() {
   const { data: clubs, loading } = useApi<Club>({
     fetchFn: clubService.getAll,
-    cacheKey: 'clubs-list'
+    cacheKey: "clubs-list",
   });
 
   if (loading) {
@@ -21,7 +21,9 @@ export default function ClubesPage() {
         activeTab="clubes"
       >
         <div className="flex items-center justify-center">
-          <div className="text-xl font-semibold text-gray-600">Carregando...</div>
+          <div className="text-xl font-semibold text-gray-600">
+            Carregando...
+          </div>
         </div>
       </DashboardHomeTemplate>
     );
@@ -35,13 +37,9 @@ export default function ClubesPage() {
     >
       <Slideshow>
         {clubs.map((club) => (
-          <ClubCard
-            key={club.id}
-            name={club.name}
-            founded={club.founded}
-          />
+          <ClubCard key={club.id} name={club.name} founded={club.founded} />
         ))}
       </Slideshow>
     </DashboardHomeTemplate>
   );
-} 
+}

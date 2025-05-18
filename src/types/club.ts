@@ -9,4 +9,4 @@ export interface CreateClubDTO {
   name: string;
   founded: string; // formato: YYYY-MM-DD
   stadiumId: number;
-} 
+}

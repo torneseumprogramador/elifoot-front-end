@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { authService } from '@/services/authService';
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { authService } from "@/services/authService";
 
 interface AuthGuardProps {
   children: React.ReactNode;
@@ -13,7 +13,7 @@ export function AuthGuard({ children }: AuthGuardProps) {
 
   useEffect(() => {
     if (!authService.isAuthenticated()) {
-      router.push('/');
+      router.push("/");
     }
   }, [router]);
 
@@ -23,4 +23,4 @@ export function AuthGuard({ children }: AuthGuardProps) {
   }
 
   return <>{children}</>;
-} 
+}

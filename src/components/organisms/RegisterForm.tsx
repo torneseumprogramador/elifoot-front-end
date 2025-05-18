@@ -35,7 +35,7 @@ export function RegisterForm() {
         name: formData.nome,
         email: formData.email,
         password: formData.senha,
-        scopes: [1] // Escopo padrão para usuários normais
+        scopes: [1], // Escopo padrão para usuários normais
       });
 
       setShowSuccessModal(true);
@@ -53,7 +53,7 @@ export function RegisterForm() {
 
   const handleModalClose = () => {
     setShowSuccessModal(false);
-    router.push('/');
+    router.push("/");
   };
 
   return (

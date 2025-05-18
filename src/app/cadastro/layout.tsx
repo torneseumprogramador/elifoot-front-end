@@ -11,4 +11,4 @@ export default function CadastroLayout({
   children: React.ReactNode;
 }) {
   return children;
-} 
+}

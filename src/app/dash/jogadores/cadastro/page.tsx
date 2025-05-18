@@ -41,12 +41,17 @@ export default function CadastroJogador() {
     loadClubs();
   }, []);
 
-  const positions: PlayerPosition[] = ['FORWARD', 'MIDFIELDER', 'DEFENDER', 'GOALKEEPER'];
+  const positions: PlayerPosition[] = [
+    "FORWARD",
+    "MIDFIELDER",
+    "DEFENDER",
+    "GOALKEEPER",
+  ];
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      if (file.type.startsWith('image/')) {
+      if (file.type.startsWith("image/")) {
         setSelectedImage(file);
       } else {
         setError("Por favor, selecione apenas arquivos de imagem.");
@@ -58,29 +63,29 @@ export default function CadastroJogador() {
     if (!selectedImage) return;
 
     const formData = new FormData();
-    formData.append('image', selectedImage);
-    formData.append('entityName', playerName);
-    formData.append('entityType', 'player');
+    formData.append("image", selectedImage);
+    formData.append("entityName", playerName);
+    formData.append("entityType", "player");
 
     try {
-      const response = await fetch('/api/upload', {
-        method: 'POST',
+      const response = await fetch("/api/upload", {
+        method: "POST",
         body: formData,
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to upload image');
+        throw new Error(data.error || "Failed to upload image");
       }
 
       if (data.status !== 201) {
-        throw new Error('Failed to save image');
+        throw new Error("Failed to save image");
       }
 
       return data.path;
     } catch (error) {
-      console.error('Error uploading image:', error);
+      console.error("Error uploading image:", error);
       throw error;
     }
   };
@@ -95,7 +100,7 @@ export default function CadastroJogador() {
         name: formData.nome,
         position: formData.posicao as PlayerPosition,
         shirtNumber: Number(formData.numero),
-        clubId: Number(formData.clubeId)
+        clubId: Number(formData.clubeId),
       });
 
       // Upload da imagem após criar o jogador
@@ -104,7 +109,7 @@ export default function CadastroJogador() {
       }
 
       // Limpa o cache dos jogadores após criar um novo
-      clearCache('players-list');
+      clearCache("players-list");
       setIsModalOpen(true);
     } catch (err: any) {
       if (err.response?.status === 409) {
@@ -128,7 +133,7 @@ export default function CadastroJogador() {
     });
     setSelectedImage(null);
     if (fileInputRef.current) {
-      fileInputRef.current.value = '';
+      fileInputRef.current.value = "";
     }
   };
 
@@ -164,7 +169,9 @@ export default function CadastroJogador() {
           <div className="grid grid-cols-2 gap-4">
             <select
               value={formData.posicao}
-              onChange={(e) => setFormData({ ...formData, posicao: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, posicao: e.target.value })
+              }
               className="w-full px-4 py-3 bg-[#2C2C2C] rounded-lg text-white border border-gray-700 focus:outline-none focus:border-[#E4A853]"
               required
             >
@@ -180,7 +187,9 @@ export default function CadastroJogador() {
               type="number"
               placeholder="Número da camisa"
               value={formData.numero}
-              onChange={(e) => setFormData({ ...formData, numero: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, numero: e.target.value })
+              }
               icon={<FiHash size={20} />}
               required
               bgColor="#2C2C2C"
@@ -190,7 +199,9 @@ export default function CadastroJogador() {
           <div className="grid grid-cols-2 gap-4">
             <select
               value={formData.clubeId}
-              onChange={(e) => setFormData({ ...formData, clubeId: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, clubeId: e.target.value })
+              }
               className="w-full px-4 py-3 bg-[#2C2C2C] rounded-lg text-white border border-gray-700 focus:outline-none focus:border-[#E4A853]"
               required
             >
@@ -216,7 +227,9 @@ export default function CadastroJogador() {
                 className="flex items-center gap-2 px-4 py-3 bg-[#2C2C2C] rounded-lg text-white border border-gray-700 cursor-pointer hover:border-[#E4A853] transition-colors"
               >
                 <FiImage size={20} />
-                {selectedImage ? selectedImage.name : "Selecionar foto do jogador"}
+                {selectedImage
+                  ? selectedImage.name
+                  : "Selecionar foto do jogador"}
               </label>
             </div>
           </div>
@@ -240,4 +253,4 @@ export default function CadastroJogador() {
       />
     </>
   );
-} 
+}

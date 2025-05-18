@@ -9,4 +9,4 @@ export interface Stadium {
   name: string;
   city: string;
   capacity: number;
-} 
+}

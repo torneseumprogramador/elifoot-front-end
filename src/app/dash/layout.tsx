@@ -11,4 +11,4 @@ export default function DashLayout({
   children: React.ReactNode;
 }) {
   return children;
-} 
+}

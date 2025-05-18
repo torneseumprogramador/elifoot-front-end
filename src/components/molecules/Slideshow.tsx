@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode, useState } from "react";
 
 interface SlideshowProps {
   children: ReactNode[];
@@ -14,9 +14,7 @@ export function Slideshow({ children, itemsPerPage = 4 }: SlideshowProps) {
 
   return (
     <div className="w-full">
-      <div className="flex justify-center gap-6 mb-8">
-        {visibleItems}
-      </div>
+      <div className="flex justify-center gap-6 mb-8">{visibleItems}</div>
 
       {totalPages > 1 && (
         <div className="flex justify-center gap-2">
@@ -26,8 +24,8 @@ export function Slideshow({ children, itemsPerPage = 4 }: SlideshowProps) {
               onClick={() => setCurrentPage(index)}
               className={`w-3 h-3 rounded-full transition-colors ${
                 currentPage === index
-                  ? 'bg-[#E4A853]'
-                  : 'bg-gray-600 hover:bg-gray-500'
+                  ? "bg-[#E4A853]"
+                  : "bg-gray-600 hover:bg-gray-500"
               }`}
               aria-label={`Go to page ${index + 1}`}
             />
@@ -36,4 +34,4 @@ export function Slideshow({ children, itemsPerPage = 4 }: SlideshowProps) {
       )}
     </div>
   );
-} 
+}

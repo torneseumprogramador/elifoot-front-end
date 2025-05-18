@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import { Button } from '../atoms/Button';
+import Image from "next/image";
+import { Button } from "../atoms/Button";
 
 interface SuccessModalProps {
   isOpen: boolean;
@@ -12,7 +12,7 @@ export function SuccessModal({
   isOpen,
   onClose,
   onNewRegistration,
-  onBack
+  onBack,
 }: SuccessModalProps) {
   if (!isOpen) return null;
 
@@ -28,20 +28,28 @@ export function SuccessModal({
             priority
             className="mb-8"
           />
-          
+
           <div className="mb-4">
             <div className="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mb-4 mx-auto">
-              <svg viewBox="0 0 24 24" className="w-8 h-8 text-white" fill="none" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <svg
+                viewBox="0 0 24 24"
+                className="w-8 h-8 text-white"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
               </svg>
             </div>
-            
+
             <h2 className="text-[#E4A853] text-2xl font-bold mb-2">
               Cadastro efetuado com sucesso!
             </h2>
-            <p className="text-gray-400">
-              Escolha seu próximo destino
-            </p>
+            <p className="text-gray-400">Escolha seu próximo destino</p>
           </div>
 
           <div className="flex flex-col w-full gap-4">
@@ -52,12 +60,8 @@ export function SuccessModal({
             >
               Novo Cadastro
             </Button>
-            
-            <Button
-              onClick={onBack}
-              variant="primary"
-              className="w-full"
-            >
+
+            <Button onClick={onBack} variant="primary" className="w-full">
               Voltar
             </Button>
           </div>
@@ -65,4 +69,4 @@ export function SuccessModal({
       </div>
     </div>
   );
-} 
+}

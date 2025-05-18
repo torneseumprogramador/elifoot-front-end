@@ -1,4 +1,8 @@
-export type PlayerPosition = 'FORWARD' | 'MIDFIELDER' | 'DEFENDER' | 'GOALKEEPER';
+export type PlayerPosition =
+  | "FORWARD"
+  | "MIDFIELDER"
+  | "DEFENDER"
+  | "GOALKEEPER";
 
 export interface Player {
   id: number;
@@ -12,4 +16,4 @@ export interface CreatePlayerDTO {
   position: PlayerPosition;
   shirtNumber: number;
   clubId: number;
-} 
+}

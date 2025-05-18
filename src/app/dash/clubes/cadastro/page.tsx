@@ -42,7 +42,7 @@ export default function CadastroClube() {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      if (file.type.startsWith('image/')) {
+      if (file.type.startsWith("image/")) {
         setSelectedImage(file);
       } else {
         setError("Por favor, selecione apenas arquivos de imagem.");
@@ -54,29 +54,29 @@ export default function CadastroClube() {
     if (!selectedImage) return;
 
     const formData = new FormData();
-    formData.append('image', selectedImage);
-    formData.append('entityName', clubName);
-    formData.append('entityType', 'club');
+    formData.append("image", selectedImage);
+    formData.append("entityName", clubName);
+    formData.append("entityType", "club");
 
     try {
-      const response = await fetch('/api/upload', {
-        method: 'POST',
+      const response = await fetch("/api/upload", {
+        method: "POST",
         body: formData,
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to upload image');
+        throw new Error(data.error || "Failed to upload image");
       }
 
       if (data.status !== 201) {
-        throw new Error('Failed to save image');
+        throw new Error("Failed to save image");
       }
 
       return data.path;
     } catch (error) {
-      console.error('Error uploading image:', error);
+      console.error("Error uploading image:", error);
       throw error;
     }
   };
@@ -88,12 +88,14 @@ export default function CadastroClube() {
 
     try {
       // Formata a data para YYYY-MM-DD
-      const formattedDate = new Date(formData.fundacao).toISOString().split('T')[0];
+      const formattedDate = new Date(formData.fundacao)
+        .toISOString()
+        .split("T")[0];
 
       await clubService.create({
         name: formData.nome,
         founded: formattedDate,
-        stadiumId: Number(formData.estadioId)
+        stadiumId: Number(formData.estadioId),
       });
 
       // Upload da imagem após criar o clube
@@ -102,7 +104,7 @@ export default function CadastroClube() {
       }
 
       // Limpa o cache dos clubes após criar um novo
-      clearCache('clubs-list');
+      clearCache("clubs-list");
       setIsModalOpen(true);
     } catch (err: any) {
       if (err.response?.status === 409) {
@@ -125,7 +127,7 @@ export default function CadastroClube() {
     });
     setSelectedImage(null);
     if (fileInputRef.current) {
-      fileInputRef.current.value = '';
+      fileInputRef.current.value = "";
     }
   };
 
@@ -163,7 +165,9 @@ export default function CadastroClube() {
               type="date"
               placeholder="Data de Fundação"
               value={formData.fundacao}
-              onChange={(e) => setFormData({ ...formData, fundacao: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, fundacao: e.target.value })
+              }
               icon={<FiCalendar size={20} />}
               required
               bgColor="#2C2C2C"
@@ -171,7 +175,9 @@ export default function CadastroClube() {
 
             <select
               value={formData.estadioId}
-              onChange={(e) => setFormData({ ...formData, estadioId: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, estadioId: e.target.value })
+              }
               className="w-full px-4 py-3 bg-[#2C2C2C] rounded-lg text-white border border-gray-700 focus:outline-none focus:border-[#E4A853]"
               required
             >
@@ -198,7 +204,9 @@ export default function CadastroClube() {
               className="flex items-center gap-2 px-4 py-3 bg-[#2C2C2C] rounded-lg text-white border border-gray-700 cursor-pointer hover:border-[#E4A853] transition-colors"
             >
               <FiImage size={20} />
-              {selectedImage ? selectedImage.name : "Selecionar imagem do clube"}
+              {selectedImage
+                ? selectedImage.name
+                : "Selecionar imagem do clube"}
             </label>
           </div>
 
@@ -221,4 +229,4 @@ export default function CadastroClube() {
       />
     </>
   );
-} 
+}

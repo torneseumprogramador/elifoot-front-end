@@ -11,4 +11,4 @@ export default function RecuperarSenhaLayout({
   children: React.ReactNode;
 }) {
   return children;
-} 
+}

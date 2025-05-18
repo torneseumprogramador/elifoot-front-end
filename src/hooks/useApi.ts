@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 // Cache global para armazenar as respostas das requisições
 const requestCache = new Map<string, any>();
@@ -24,10 +24,10 @@ export function clearCache(cacheKey?: string) {
   }
 }
 
-export function useApi<T>({ 
-  fetchFn, 
+export function useApi<T>({
+  fetchFn,
   dependencies = [],
-  cacheKey
+  cacheKey,
 }: UseApiOptions<T>): UseApiResult<T> {
   const [data, setData] = useState<T[]>(() => {
     // Tenta recuperar do cache primeiro
@@ -36,7 +36,9 @@ export function useApi<T>({
     }
     return [];
   });
-  const [loading, setLoading] = useState(!cacheKey || !requestCache.has(cacheKey));
+  const [loading, setLoading] = useState(
+    !cacheKey || !requestCache.has(cacheKey),
+  );
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
@@ -78,4 +80,4 @@ export function useApi<T>({
   }, [fetchFn, cacheKey, ...dependencies]);
 
   return { data, loading, error };
-} 
+}

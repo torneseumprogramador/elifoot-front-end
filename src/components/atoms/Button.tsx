@@ -20,8 +20,9 @@ export function Button({
   const baseStyles = "font-semibold py-3 px-4 rounded-lg transition-colors";
   const variantStyles = {
     primary: "bg-[#E4A853] text-black hover:bg-[#c89447]",
-    secondary: "bg-black text-[#E4A853] border-2 border-[#E4A853] hover:bg-[#E4A853] hover:text-black",
-    outline: "border-2 border-white text-white hover:bg-white hover:text-black", 
+    secondary:
+      "bg-black text-[#E4A853] border-2 border-[#E4A853] hover:bg-[#E4A853] hover:text-black",
+    outline: "border-2 border-white text-white hover:bg-white hover:text-black",
     black: "bg-black text-white hover:bg-gray-700",
     "black-white": "bg-white text-black hover:bg-gray-700 hover:text-white",
   };
