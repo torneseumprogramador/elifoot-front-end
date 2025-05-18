@@ -12,6 +12,7 @@ interface FormFieldProps {
   required?: boolean;
   bgColor?: string;
   border?: boolean;
+  textColor?: string;
 }
 
 export function FormField({
@@ -25,11 +26,12 @@ export function FormField({
   required,
   bgColor,
   border,
+  textColor = "text-gray-200", // Default text color
 }: FormFieldProps) {
   return (
     <div className="space-y-2">
       {label && (
-        <label className="block text-sm font-medium text-gray-200">
+        <label className={`block text-sm font-medium ${textColor}`}>
           {label}
         </label>
       )}
@@ -42,6 +44,7 @@ export function FormField({
         required={required}
         bgColor={bgColor}
         border={border}
+        textColor={textColor}
       />
       {error && <p className="text-sm text-red-500">{error}</p>}
     </div>

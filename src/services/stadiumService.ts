@@ -9,26 +9,9 @@ export const stadiumService = {
     return response.data.content;
   },
 
-  // Get stadium by ID
-  async getById(id: number): Promise<Stadium> {
-    const response = await api.get(`/stadiums/${id}`);
-    return response.data;
-  },
-
   // Create new stadium
   async create(stadium: CreateStadiumDTO): Promise<Stadium> {
     const response = await api.post('/stadiums', stadium);
     return response.data;
   },
-
-  // Update stadium
-  async update(id: number, stadium: Partial<CreateStadiumDTO>): Promise<Stadium> {
-    const response = await api.put(`/stadiums/${id}`, stadium);
-    return response.data;
-  },
-
-  // Delete stadium
-  async delete(id: number): Promise<void> {
-    await api.delete(`/stadiums/${id}`);
-  }
 }; 

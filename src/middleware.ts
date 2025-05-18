@@ -5,7 +5,7 @@ export function middleware(request: NextRequest) {
   // Verifica se é uma rota da API
   if (request.nextUrl.pathname.startsWith('/api/')) {
     // Lista de rotas públicas da API que não precisam de autenticação
-    const publicRoutes = ['/api/login'];
+    const publicRoutes = ['/api/login', '/api/users'];
     
     // Se for uma rota pública, permite o acesso
     if (publicRoutes.some(route => request.nextUrl.pathname.startsWith(route))) {

@@ -15,6 +15,15 @@ interface UseApiResult<T> {
   error: Error | null;
 }
 
+// Função para limpar o cache
+export function clearCache(cacheKey?: string) {
+  if (cacheKey) {
+    requestCache.delete(cacheKey);
+  } else {
+    requestCache.clear();
+  }
+}
+
 export function useApi<T>({ 
   fetchFn, 
   dependencies = [],

@@ -5,24 +5,47 @@ import { FormField } from "@/components/molecules/FormField";
 import { Button } from "@/components/atoms/Button";
 import { SuccessModal } from "@/components/molecules/SuccessModal";
 import { useState } from "react";
-import { FiMapPin, FiUsers, FiImage } from "react-icons/fi";
+import { FiMapPin, FiUsers } from "react-icons/fi";
 import { useRouter } from "next/navigation";
+import { stadiumService } from "@/services/stadiumService";
+import { clearCache } from "@/hooks/useApi";
 
 export default function CadastroEstadio() {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     nome: "",
     cidade: "",
     capacidade: "",
-    imagem: ""
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implementar lógica de cadastro
-    console.log(formData);
-    setIsModalOpen(true);
+    setError("");
+    setLoading(true);
+
+    try {
+      await stadiumService.create({
+        name: formData.nome,
+        city: formData.cidade,
+        capacity: Number(formData.capacidade)
+      });
+
+      // Limpa o cache dos estádios após criar um novo
+      clearCache('stadiums-list');
+      setIsModalOpen(true);
+    } catch (err: any) {
+      if (err.response?.status === 409) {
+        setError("Este estádio já está cadastrado.");
+      } else {
+        setError("Erro ao cadastrar estádio. Por favor, tente novamente.");
+      }
+      console.error("Stadium registration error:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleNewRegistration = () => {
@@ -31,12 +54,11 @@ export default function CadastroEstadio() {
       nome: "",
       cidade: "",
       capacidade: "",
-      imagem: ""
     });
   };
 
-  const handleGoHome = () => {
-    router.push("/dash");
+  const handleGoBack = () => {
+    router.push("/dash/estadios");
   };
 
   return (
@@ -48,6 +70,12 @@ export default function CadastroEstadio() {
         backPath="/dash/estadios"
       >
         <form onSubmit={handleSubmit} className="space-y-4">
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+              {error}
+            </div>
+          )}
+
           <FormField
             type="text"
             placeholder="Nome do Estádio"
@@ -68,34 +96,23 @@ export default function CadastroEstadio() {
             bgColor="#2C2C2C"
           />
 
-          <div className="grid grid-cols-2 gap-4">
-            <FormField
-              type="number"
-              placeholder="Capacidade"
-              value={formData.capacidade}
-              onChange={(e) => setFormData({ ...formData, capacidade: e.target.value })}
-              icon={<FiUsers size={20} />}
-              required
-              bgColor="#2C2C2C"
-            />
-
-            <FormField
-              type="text"
-              placeholder="Imagem"
-              value={formData.imagem}
-              onChange={(e) => setFormData({ ...formData, imagem: e.target.value })}
-              icon={<FiImage size={20} />}
-              required
-              bgColor="#2C2C2C"
-            />
-          </div>
+          <FormField
+            type="number"
+            placeholder="Capacidade"
+            value={formData.capacidade}
+            onChange={(e) => setFormData({ ...formData, capacidade: e.target.value })}
+            icon={<FiUsers size={20} />}
+            required
+            bgColor="#2C2C2C"
+          />
 
           <Button
             type="submit"
             variant="primary"
             className="w-full mt-8"
+            disabled={loading}
           >
-            Cadastrar Estádio
+            {loading ? "Cadastrando..." : "Cadastrar Estádio"}
           </Button>
         </form>
       </DashboardTemplate>
@@ -104,7 +121,7 @@ export default function CadastroEstadio() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onNewRegistration={handleNewRegistration}
-        onGoHome={handleGoHome}
+        onBack={handleGoBack}
       />
     </>
   );

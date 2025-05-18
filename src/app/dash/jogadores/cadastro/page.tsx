@@ -4,26 +4,70 @@ import { DashboardTemplate } from "@/components/templates/DashboardTemplate";
 import { FormField } from "@/components/molecules/FormField";
 import { Button } from "@/components/atoms/Button";
 import { SuccessModal } from "@/components/molecules/SuccessModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FiUser, FiShield, FiHash, FiImage } from "react-icons/fi";
 import { useRouter } from "next/navigation";
+import { playerService } from "@/services/playerService";
+import { clubService } from "@/services/clubService";
+import { clearCache } from "@/hooks/useApi";
+import { PlayerPosition } from "@/types/player";
+import { Club } from "@/types/club";
 
 export default function CadastroJogador() {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [clubs, setClubs] = useState<Club[]>([]);
   const [formData, setFormData] = useState({
     nome: "",
     posicao: "",
-    clube: "",
+    clubeId: "",
     numero: "",
     imagem: ""
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    const loadClubs = async () => {
+      try {
+        const clubsList = await clubService.getAll();
+        setClubs(clubsList);
+      } catch (err) {
+        console.error("Error loading clubs:", err);
+      }
+    };
+
+    loadClubs();
+  }, []);
+
+  const positions: PlayerPosition[] = ['FORWARD', 'MIDFIELDER', 'DEFENDER', 'GOALKEEPER'];
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implementar lógica de cadastro
-    console.log(formData);
-    setIsModalOpen(true);
+    setError("");
+    setLoading(true);
+
+    try {
+      await playerService.create({
+        name: formData.nome,
+        position: formData.posicao as PlayerPosition,
+        shirtNumber: Number(formData.numero),
+        clubId: Number(formData.clubeId)
+      });
+
+      // Limpa o cache dos jogadores após criar um novo
+      clearCache('players-list');
+      setIsModalOpen(true);
+    } catch (err: any) {
+      if (err.response?.status === 409) {
+        setError("Este jogador já está cadastrado.");
+      } else {
+        setError("Erro ao cadastrar jogador. Por favor, tente novamente.");
+      }
+      console.error("Player registration error:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleNewRegistration = () => {
@@ -31,14 +75,14 @@ export default function CadastroJogador() {
     setFormData({
       nome: "",
       posicao: "",
-      clube: "",
+      clubeId: "",
       numero: "",
       imagem: ""
     });
   };
 
-  const handleGoHome = () => {
-    router.push("/dash");
+  const handleGoBack = () => {
+    router.push("/dash/jogadores");
   };
 
   return (
@@ -50,6 +94,12 @@ export default function CadastroJogador() {
         backPath="/dash/jogadores"
       >
         <form onSubmit={handleSubmit} className="space-y-4">
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+              {error}
+            </div>
+          )}
+
           <FormField
             type="text"
             placeholder="Nome do Jogador"
@@ -61,19 +111,23 @@ export default function CadastroJogador() {
           />
 
           <div className="grid grid-cols-2 gap-4">
-            <FormField
-              type="text"
-              placeholder="Posição de Jogo"
+            <select
               value={formData.posicao}
               onChange={(e) => setFormData({ ...formData, posicao: e.target.value })}
-              icon={<FiUser size={20} />}
+              className="w-full px-4 py-3 bg-[#2C2C2C] rounded-lg text-white border border-gray-700 focus:outline-none focus:border-[#E4A853]"
               required
-              bgColor="#2C2C2C"
-            />
+            >
+              <option value="">Selecione a posição</option>
+              {positions.map((pos) => (
+                <option key={pos} value={pos}>
+                  {pos}
+                </option>
+              ))}
+            </select>
 
             <FormField
               type="number"
-              placeholder="Número camisa"
+              placeholder="Número da camisa"
               value={formData.numero}
               onChange={(e) => setFormData({ ...formData, numero: e.target.value })}
               icon={<FiHash size={20} />}
@@ -83,15 +137,19 @@ export default function CadastroJogador() {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <FormField
-              type="text"
-              placeholder="Clube atual"
-              value={formData.clube}
-              onChange={(e) => setFormData({ ...formData, clube: e.target.value })}
-              icon={<FiShield size={20} />}
+            <select
+              value={formData.clubeId}
+              onChange={(e) => setFormData({ ...formData, clubeId: e.target.value })}
+              className="w-full px-4 py-3 bg-[#2C2C2C] rounded-lg text-white border border-gray-700 focus:outline-none focus:border-[#E4A853]"
               required
-              bgColor="#2C2C2C"
-            />
+            >
+              <option value="">Selecione o clube</option>
+              {clubs.map((club) => (
+                <option key={club.id} value={club.id}>
+                  {club.name}
+                </option>
+              ))}
+            </select>
 
             <FormField
               type="text"
@@ -108,8 +166,9 @@ export default function CadastroJogador() {
             type="submit"
             variant="primary"
             className="w-full mt-8"
+            disabled={loading}
           >
-            Cadastrar Jogador
+            {loading ? "Cadastrando..." : "Cadastrar Jogador"}
           </Button>
         </form>
       </DashboardTemplate>
@@ -118,7 +177,7 @@ export default function CadastroJogador() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onNewRegistration={handleNewRegistration}
-        onGoHome={handleGoHome}
+        onBack={handleGoBack}
       />
     </>
   );
