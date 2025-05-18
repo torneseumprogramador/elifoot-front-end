@@ -1,8 +1,17 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Button } from '../atoms/Button';
+import { authService } from '@/services/authService';
 
 export function Header() {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    authService.logout();
+    router.push('/');
+  };
+
   return (
     <header className="w-full bg-black py-4 px-8 flex items-center justify-between border-b border-gray-800">
       <Link href="/dash">
@@ -38,7 +47,7 @@ export function Header() {
 
       <Button
         variant="black-white"
-        onClick={() => {/* TODO: Implement logout */}}
+        onClick={handleLogout}
         className="rounded-full px-8"
       >
         Sair

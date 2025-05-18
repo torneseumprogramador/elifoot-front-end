@@ -20,7 +20,9 @@ export default function EstadiosPage() {
         subtitle="Por favor, aguarde"
         activeTab="estadios"
       >
-        <div>Loading...</div>
+        <div className="flex items-center justify-center">
+          <div className="text-xl font-semibold text-gray-600">Carregando...</div>
+        </div>
       </DashboardHomeTemplate>
     );
   }

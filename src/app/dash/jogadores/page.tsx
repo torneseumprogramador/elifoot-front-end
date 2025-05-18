@@ -20,7 +20,9 @@ export default function JogadoresPage() {
         subtitle="Por favor, aguarde"
         activeTab="jogadores"
       >
-        <div>Loading...</div>
+        <div className="flex items-center justify-center">
+          <div className="text-xl font-semibold text-gray-600">Carregando...</div>
+        </div>
       </DashboardHomeTemplate>
     );
   }

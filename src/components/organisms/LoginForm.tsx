@@ -26,8 +26,7 @@ export function LoginForm() {
         password: formData.password,
       });
       
-      // Redireciona para o dashboard após o login
-      router.push("/dash/jogadores");
+      router.push("/dash");
     } catch (err) {
       setError("Email ou senha inválidos");
       console.error("Login error:", err);
