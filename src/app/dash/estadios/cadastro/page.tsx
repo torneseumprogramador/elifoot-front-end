@@ -45,7 +45,7 @@ export default function CadastroEstadio() {
 
     try {
       // Save the image to the public/uploads directory
-      const response = await fetch('/api/upload/stadium', {
+      const response = await fetch('/api/upload', {
         method: 'POST',
         body: formData,
       });

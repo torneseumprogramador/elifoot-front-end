@@ -15,12 +15,29 @@ export async function GET(request: NextRequest) {
     });
 
     const data = await response.json();
-    return NextResponse.json(data);
+
+    if (!response.ok) {
+      return NextResponse.json({
+        error: data.message || 'Failed to fetch clubs',
+        path: '/clubs',
+        status: response.status,
+        timestamp: new Date().toISOString()
+      }, { status: response.status });
+    }
+
+    return NextResponse.json({
+      ...data,
+      path: '/clubs',
+      status: 200,
+      timestamp: new Date().toISOString()
+    });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to fetch clubs' },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      error: 'Internal Server Error',
+      path: '/clubs',
+      status: 500,
+      timestamp: new Date().toISOString()
+    }, { status: 500 });
   }
 }
 
@@ -39,11 +56,28 @@ export async function POST(request: NextRequest) {
     });
 
     const data = await response.json();
-    return NextResponse.json(data, { status: 201 });
+
+    if (!response.ok) {
+      return NextResponse.json({
+        error: data.message || 'Failed to create club',
+        path: '/clubs',
+        status: response.status,
+        timestamp: new Date().toISOString()
+      }, { status: response.status });
+    }
+
+    return NextResponse.json({
+      ...data,
+      path: '/clubs',
+      status: 201,
+      timestamp: new Date().toISOString()
+    }, { status: 201 });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to create club' },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      error: 'Internal Server Error',
+      path: '/clubs',
+      status: 500,
+      timestamp: new Date().toISOString()
+    }, { status: 500 });
   }
 } 

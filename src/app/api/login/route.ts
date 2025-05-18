@@ -16,11 +16,28 @@ export async function POST(request: NextRequest) {
     });
 
     const data = await response.json();
-    return NextResponse.json(data, { status: 200 });
+
+    if (!response.ok) {
+      return NextResponse.json({
+        error: data.message || 'Authentication failed',
+        path: '/login',
+        status: response.status,
+        timestamp: new Date().toISOString()
+      }, { status: response.status });
+    }
+
+    return NextResponse.json({
+      ...data,
+      path: '/login',
+      status: 200,
+      timestamp: new Date().toISOString()
+    }, { status: 200 });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to authenticate' },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      error: 'Internal Server Error',
+      path: '/login',
+      status: 500,
+      timestamp: new Date().toISOString()
+    }, { status: 500 });
   }
 } 

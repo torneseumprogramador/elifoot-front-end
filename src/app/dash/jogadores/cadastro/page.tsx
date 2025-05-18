@@ -4,7 +4,7 @@ import { DashboardTemplate } from "@/components/templates/DashboardTemplate";
 import { FormField } from "@/components/molecules/FormField";
 import { Button } from "@/components/atoms/Button";
 import { SuccessModal } from "@/components/molecules/SuccessModal";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FiUser, FiShield, FiHash, FiImage } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import { playerService } from "@/services/playerService";
@@ -15,16 +15,17 @@ import { Club } from "@/types/club";
 
 export default function CadastroJogador() {
   const router = useRouter();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [clubs, setClubs] = useState<Club[]>([]);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [formData, setFormData] = useState({
     nome: "",
     posicao: "",
     clubeId: "",
     numero: "",
-    imagem: ""
   });
 
   useEffect(() => {
@@ -42,6 +43,48 @@ export default function CadastroJogador() {
 
   const positions: PlayerPosition[] = ['FORWARD', 'MIDFIELDER', 'DEFENDER', 'GOALKEEPER'];
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      if (file.type.startsWith('image/')) {
+        setSelectedImage(file);
+      } else {
+        setError("Por favor, selecione apenas arquivos de imagem.");
+      }
+    }
+  };
+
+  const saveImage = async (playerName: string) => {
+    if (!selectedImage) return;
+
+    const formData = new FormData();
+    formData.append('image', selectedImage);
+    formData.append('entityName', playerName);
+    formData.append('entityType', 'player');
+
+    try {
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to upload image');
+      }
+
+      if (data.status !== 201) {
+        throw new Error('Failed to save image');
+      }
+
+      return data.path;
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      throw error;
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -54,6 +97,11 @@ export default function CadastroJogador() {
         shirtNumber: Number(formData.numero),
         clubId: Number(formData.clubeId)
       });
+
+      // Upload da imagem após criar o jogador
+      if (selectedImage) {
+        await saveImage(formData.nome);
+      }
 
       // Limpa o cache dos jogadores após criar um novo
       clearCache('players-list');
@@ -77,8 +125,11 @@ export default function CadastroJogador() {
       posicao: "",
       clubeId: "",
       numero: "",
-      imagem: ""
     });
+    setSelectedImage(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
 
   const handleGoBack = () => {
@@ -151,15 +202,23 @@ export default function CadastroJogador() {
               ))}
             </select>
 
-            <FormField
-              type="text"
-              placeholder="Imagem"
-              value={formData.imagem}
-              onChange={(e) => setFormData({ ...formData, imagem: e.target.value })}
-              icon={<FiImage size={20} />}
-              required
-              bgColor="#2C2C2C"
-            />
+            <div className="relative">
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleImageChange}
+                accept="image/*"
+                className="hidden"
+                id="player-image"
+              />
+              <label
+                htmlFor="player-image"
+                className="flex items-center gap-2 px-4 py-3 bg-[#2C2C2C] rounded-lg text-white border border-gray-700 cursor-pointer hover:border-[#E4A853] transition-colors"
+              >
+                <FiImage size={20} />
+                {selectedImage ? selectedImage.name : "Selecionar foto do jogador"}
+              </label>
+            </div>
           </div>
 
           <Button

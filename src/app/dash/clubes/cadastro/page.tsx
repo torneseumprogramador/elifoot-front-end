@@ -4,8 +4,8 @@ import { DashboardTemplate } from "@/components/templates/DashboardTemplate";
 import { FormField } from "@/components/molecules/FormField";
 import { Button } from "@/components/atoms/Button";
 import { SuccessModal } from "@/components/molecules/SuccessModal";
-import { useState, useEffect } from "react";
-import { FiUser, FiCalendar } from "react-icons/fi";
+import { useState, useEffect, useRef } from "react";
+import { FiUser, FiCalendar, FiImage } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import { clubService } from "@/services/clubService";
 import { stadiumService } from "@/services/stadiumService";
@@ -14,10 +14,12 @@ import { Stadium } from "@/types/stadium";
 
 export default function CadastroClube() {
   const router = useRouter();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [stadiums, setStadiums] = useState<Stadium[]>([]);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [formData, setFormData] = useState({
     nome: "",
     fundacao: "",
@@ -37,6 +39,48 @@ export default function CadastroClube() {
     loadStadiums();
   }, []);
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      if (file.type.startsWith('image/')) {
+        setSelectedImage(file);
+      } else {
+        setError("Por favor, selecione apenas arquivos de imagem.");
+      }
+    }
+  };
+
+  const saveImage = async (clubName: string) => {
+    if (!selectedImage) return;
+
+    const formData = new FormData();
+    formData.append('image', selectedImage);
+    formData.append('entityName', clubName);
+    formData.append('entityType', 'club');
+
+    try {
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to upload image');
+      }
+
+      if (data.status !== 201) {
+        throw new Error('Failed to save image');
+      }
+
+      return data.path;
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      throw error;
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -51,6 +95,11 @@ export default function CadastroClube() {
         founded: formattedDate,
         stadiumId: Number(formData.estadioId)
       });
+
+      // Upload da imagem após criar o clube
+      if (selectedImage) {
+        await saveImage(formData.nome);
+      }
 
       // Limpa o cache dos clubes após criar um novo
       clearCache('clubs-list');
@@ -74,6 +123,10 @@ export default function CadastroClube() {
       fundacao: "",
       estadioId: "",
     });
+    setSelectedImage(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
 
   const handleGoBack = () => {
@@ -129,6 +182,24 @@ export default function CadastroClube() {
                 </option>
               ))}
             </select>
+          </div>
+
+          <div className="relative">
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleImageChange}
+              accept="image/*"
+              className="hidden"
+              id="club-image"
+            />
+            <label
+              htmlFor="club-image"
+              className="flex items-center gap-2 px-4 py-3 bg-[#2C2C2C] rounded-lg text-white border border-gray-700 cursor-pointer hover:border-[#E4A853] transition-colors"
+            >
+              <FiImage size={20} />
+              {selectedImage ? selectedImage.name : "Selecionar imagem do clube"}
+            </label>
           </div>
 
           <Button
