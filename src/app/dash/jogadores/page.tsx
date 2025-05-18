@@ -1,72 +1,56 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { DashboardHomeTemplate } from "@/components/templates/DashboardHomeTemplate";
 import { PlayerCard } from "@/components/molecules/PlayerCard";
 import { Slideshow } from "@/components/molecules/Slideshow";
-
-// This would typically come from an API
-const MOCK_PLAYERS = [
-  {
-    name: "Pablo Vegetti",
-    position: "Atacante",
-    number: "99",
-    club: "Vasco da Gama",
-    imageUrl: "/jogador.svg"
-  },
-  {
-    name: "Dimitri Payet",
-    position: "Meia",
-    number: "10",
-    club: "Vasco da Gama",
-    imageUrl: "/jogador.svg"
-  },
-  {
-    name: "Léo Jardim",
-    position: "Goleiro",
-    number: "01",
-    club: "Vasco da Gama",
-    imageUrl: "/jogador.svg"
-  },
-  {
-    name: "Manuel Capasso",
-    position: "Zagueiro",
-    number: "24",
-    club: "Vasco da Gama",
-    imageUrl: "/jogador.svg"
-  },
-  {
-    name: "Manuel Capasso",
-    position: "Zagueiro",
-    number: "24",
-    club: "Vasco da Gama",
-    imageUrl: "/jogador.svg"
-  },
-  {
-    name: "Manuel Capasso",
-    position: "Zagueiro",
-    number: "24",
-    club: "Vasco da Gama",
-    imageUrl: "/jogador.svg"
-  },
-  // Add more players as needed
-];
+import { playerService } from "@/services/playerService";
+import { Player } from "@/types/player";
 
 export default function JogadoresPage() {
+  const [players, setPlayers] = useState<Player[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPlayers = async () => {
+      try {
+        const response = await playerService.getAll();
+        setPlayers(response);
+      } catch (error) {
+        console.error("Error fetching players:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPlayers();
+  }, []);
+
+  if (loading) {
+    return (
+      <DashboardHomeTemplate
+        title="Carregando jogadores..."
+        subtitle="Por favor, aguarde"
+        activeTab="jogadores"
+      >
+        <div>Loading...</div>
+      </DashboardHomeTemplate>
+    );
+  }
+
   return (
     <DashboardHomeTemplate
-      title="Seja bem-vindo a home"
-      subtitle="Aqui você pode ver todos cadastros efetuados"
+      title="Jogadores"
+      subtitle="Lista de todos os jogadores cadastrados"
       activeTab="jogadores"
     >
       <Slideshow>
-        {MOCK_PLAYERS.map((player, index) => (
+        {players.map((player) => (
           <PlayerCard
-            key={index}
+            key={player.id}
             name={player.name}
             position={player.position}
-            number={player.number}
-            club={player.club}
-            imageUrl={player.imageUrl}
+            shirtNumber={player.shirtNumber}
           />
         ))}
       </Slideshow>
