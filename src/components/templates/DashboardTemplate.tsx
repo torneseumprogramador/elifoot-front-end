@@ -6,12 +6,16 @@ import { FiArrowLeft } from "react-icons/fi";
 interface DashboardTemplateProps {
   children: ReactNode;
   title: string;
+  backPath: string;
+  backPathLabel: string;
   type: "estadio" | "clube" | "jogador";
 }
 
 export function DashboardTemplate({
   children,
   title,
+  backPath,
+  backPathLabel,
   type
 }: DashboardTemplateProps) {
   const images = {
@@ -25,11 +29,11 @@ export function DashboardTemplate({
       {/* Left Side - Form */}
       <div className="w-1/2 p-12">
         <Link 
-          href="/dash" 
+          href={backPath} 
           className="inline-flex items-center text-gray-400 hover:text-white mb-12"
         >
           <FiArrowLeft className="mr-2" />
-          Voltar a tela de cadastros
+          {backPathLabel}
         </Link>
 
         <div className="mb-12">

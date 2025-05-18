@@ -5,16 +5,17 @@ import { FormField } from "@/components/molecules/FormField";
 import { Button } from "@/components/atoms/Button";
 import { SuccessModal } from "@/components/molecules/SuccessModal";
 import { useState } from "react";
-import { FiMapPin, FiUsers, FiImage } from "react-icons/fi";
+import { FiUser, FiShield, FiHash, FiImage } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 
-export default function CadastroEstadio() {
+export default function CadastroJogador() {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     nome: "",
-    cidade: "",
-    capacidade: "",
+    posicao: "",
+    clube: "",
+    numero: "",
     imagem: ""
   });
 
@@ -29,8 +30,9 @@ export default function CadastroEstadio() {
     setIsModalOpen(false);
     setFormData({
       nome: "",
-      cidade: "",
-      capacidade: "",
+      posicao: "",
+      clube: "",
+      numero: "",
       imagem: ""
     });
   };
@@ -42,37 +44,51 @@ export default function CadastroEstadio() {
   return (
     <>
       <DashboardTemplate
-        title="Cadastre o seu Estádio"
-        type="estadio"
+        title="Cadastre o seu Jogador"
+        type="jogador"
+        backPathLabel="Voltar para lista de jogadores"
+        backPath="/dash/jogadores"
       >
         <form onSubmit={handleSubmit} className="space-y-4">
           <FormField
             type="text"
-            placeholder="Nome do Estádio"
+            placeholder="Nome do Jogador"
             value={formData.nome}
             onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
-            icon={<FiMapPin size={20} />}
-            required
-            bgColor="#2C2C2C"
-          />
-
-          <FormField
-            type="text"
-            placeholder="Em qual cidade fica o estádio?"
-            value={formData.cidade}
-            onChange={(e) => setFormData({ ...formData, cidade: e.target.value })}
-            icon={<FiMapPin size={20} />}
+            icon={<FiUser size={20} />}
             required
             bgColor="#2C2C2C"
           />
 
           <div className="grid grid-cols-2 gap-4">
             <FormField
+              type="text"
+              placeholder="Posição de Jogo"
+              value={formData.posicao}
+              onChange={(e) => setFormData({ ...formData, posicao: e.target.value })}
+              icon={<FiUser size={20} />}
+              required
+              bgColor="#2C2C2C"
+            />
+
+            <FormField
               type="number"
-              placeholder="Capacidade"
-              value={formData.capacidade}
-              onChange={(e) => setFormData({ ...formData, capacidade: e.target.value })}
-              icon={<FiUsers size={20} />}
+              placeholder="Número camisa"
+              value={formData.numero}
+              onChange={(e) => setFormData({ ...formData, numero: e.target.value })}
+              icon={<FiHash size={20} />}
+              required
+              bgColor="#2C2C2C"
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <FormField
+              type="text"
+              placeholder="Clube atual"
+              value={formData.clube}
+              onChange={(e) => setFormData({ ...formData, clube: e.target.value })}
+              icon={<FiShield size={20} />}
               required
               bgColor="#2C2C2C"
             />
@@ -93,7 +109,7 @@ export default function CadastroEstadio() {
             variant="primary"
             className="w-full mt-8"
           >
-            Cadastrar Estádio
+            Cadastrar Jogador
           </Button>
         </form>
       </DashboardTemplate>

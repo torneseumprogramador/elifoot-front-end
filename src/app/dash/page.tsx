@@ -5,10 +5,10 @@ import { DashTemplate } from "@/components/templates/DashTemplate";
 
 export default function DashCadastro() {
   return (
-    <DashTemplate title="O que vamos cadastrar hoje?" subtitle="Escolha o que cadastrar">
+    <DashTemplate title="O que vamos fazer hoje?" subtitle="Escolha o que cadastrar">
       <div className="flex justify-center gap-4">
         <LinkButton
-            href="/dash/estadio/cadastro"
+            href="/dash/estadios/cadastro"
             variant="outline"
             className="w-[400px] rounded-[10px]"
         >
@@ -16,7 +16,7 @@ export default function DashCadastro() {
         </LinkButton>
 
         <LinkButton
-            href="/dash/clube/cadastro"
+            href="/dash/clubes/cadastro"
             variant="black-white"
             className="w-[400px] rounded-[10px]"
         >
@@ -24,7 +24,7 @@ export default function DashCadastro() {
         </LinkButton>
 
         <LinkButton
-            href="/dash/jogador/cadastro"
+            href="/dash/jogadores/cadastro"
             variant="outline"
             className="w-[400px] rounded-[10px]"
         >
